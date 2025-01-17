@@ -2,12 +2,18 @@
 *.json
 dist/
 build/
+!builds/
 *.deb
+!builds/*.deb
 *.exe
+!builds/*.exe
 icons/
 TinyTask-portable-*
+!builds/TinyTask-portable-*
 TinyTask-Setup.exe
+!builds/TinyTask-Setup.exe
 tinytask_*_amd64*
+!builds/tinytask_*_amd64*
 installer.nsi
 
 # PyInstaller

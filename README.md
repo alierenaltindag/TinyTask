@@ -2,8 +2,10 @@
 
 <div align="center">
   <img src="screenshots/main.png" alt="TinyTask Ana Ekran" width="300" style="margin: 10px"/>
-  <img src="screenshots/favorites.png" alt="Favoriler Ekranı" width="300" style="margin: 10px"/>
   <img src="screenshots/settings.png" alt="Ayarlar Ekranı" width="300" style="margin: 10px"/>
+</div>
+<div align="center">
+  <img src="screenshots/favorites.png" alt="Favoriler Ekranı" width="300" style="margin: 10px"/>
 </div>
 
 TinyTask is a lightweight macro recorder that allows you to record and replay mouse movements and keyboard actions. It's built with PyQt6 and provides a modern, user-friendly interface.
@@ -20,7 +22,7 @@ TinyTask is a lightweight macro recorder that allows you to record and replay mo
 - Save favorite macros
 - Customizable shortcut keys
 - Modern and intuitive interface
-- Cross-platform support (Windows and Linux)
+- Cross-platform support (Windows and Debian-based Linux distributions)
 - Available as portable executable or system installer
 
 ## Installation
@@ -29,13 +31,13 @@ TinyTask is a lightweight macro recorder that allows you to record and replay mo
 
 #### Windows
 
-1. Download `TinyTask-Setup.exe` from the latest release
+1. Download [`TinyTask-Setup.exe`](builds/TinyTask-Setup.exe) from the builds directory
 2. Run the installer and follow the installation wizard
 3. Launch TinyTask from the Start Menu or Desktop shortcut
 
-#### Linux (Debian/Ubuntu)
+#### Debian-based Linux (Ubuntu, Linux Mint, Pop!\_OS, etc.)
 
-1. Download `tinytask_1.0.0_amd64.deb` from the latest release
+1. Download [`tinytask_1.0.0_amd64.deb`](builds/tinytask_1.0.0_amd64.deb) from the builds directory
 2. Install using:
 
 ```bash
@@ -46,16 +48,20 @@ sudo dpkg -i tinytask_1.0.0_amd64.deb
 
 ### Portable Version
 
-1. Download the appropriate portable version for your system:
-   - Windows: `TinyTask-portable-windows.exe`
-   - Linux: `TinyTask-portable-linux`
-2. Make the file executable (Linux only):
+Download the appropriate portable version from the builds directory:
+
+- Windows: [`TinyTask-portable-windows.exe`](builds/TinyTask-portable-windows.exe)
+- Linux: [`TinyTask-portable-linux`](builds/TinyTask-portable-linux) (Tested on Debian-based distributions)
+
+For Linux:
 
 ```bash
+cd builds
 chmod +x TinyTask-portable-linux
+./TinyTask-portable-linux
 ```
 
-3. Run the executable directly
+For Windows, download and run the .exe file directly.
 
 ### Building from Source
 
@@ -87,16 +93,16 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
-5. For Ubuntu/Debian, build and install the .deb package:
+5. For Debian-based distributions, build and install the .deb package:
 
 ```bash
 python build.py installer
-sudo dpkg -i tinytask_1.0.0_amd64.deb # For installer
+sudo dpkg -i builds/tinytask_1.0.0_amd64.deb
 ```
 
 ## Building Executables
 
-The project includes a build script that can create both portable executables and system installers.
+The project includes a build script that can create both portable executables and system installers. Built packages will be placed in the `builds` directory.
 
 ### Prerequisites
 
@@ -104,7 +110,7 @@ The project includes a build script that can create both portable executables an
 
 - Install NSIS (Nullsoft Scriptable Install System) from https://nsis.sourceforge.io/
 
-#### Linux
+#### Debian-based Linux
 
 - Install dpkg-deb:
 

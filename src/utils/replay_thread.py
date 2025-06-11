@@ -55,6 +55,9 @@ class ReplayThread(QThread):
                         self.pressed_keys.remove(key_str)
                 except:
                     pass
+            elif action['type'] == 'scroll':
+                self.mouse.position = (action['x'], action['y'])
+                self.mouse.scroll(action['dx'], action['dy'])
             
             last_time = action['time']
         

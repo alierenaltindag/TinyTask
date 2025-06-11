@@ -5,6 +5,7 @@ class Settings:
     def __init__(self):
         self.track_mouse = True
         self.track_keyboard = True
+        self.track_scroll = True
         self.record_key = 'ctrl+s'
         self.replay_key = 'ctrl+r'
         self.settings_file = 'macro_settings.json'
@@ -13,6 +14,7 @@ class Settings:
         settings = {
             'track_mouse': self.track_mouse,
             'track_keyboard': self.track_keyboard,
+            'track_scroll': self.track_scroll,
             'record_key': self.record_key,
             'replay_key': self.replay_key
         }
@@ -25,6 +27,7 @@ class Settings:
                 settings = json.load(f)
                 self.track_mouse = settings.get('track_mouse', True)
                 self.track_keyboard = settings.get('track_keyboard', True)
+                self.track_scroll = settings.get('track_scroll', True)
                 self.record_key = settings.get('record_key', 'ctrl+s')
                 self.replay_key = settings.get('replay_key', 'ctrl+r')
         except FileNotFoundError:

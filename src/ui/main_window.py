@@ -100,15 +100,19 @@ class MacroRecorder(QMainWindow):
         
         self.track_mouse_var = QCheckBox("Track Mouse Movements")
         self.track_keyboard_var = QCheckBox("Track Keyboard Keys")
+        self.track_scroll_var = QCheckBox("Track Mouse Scrolling")
         
         self.track_mouse_var.setChecked(self.settings.track_mouse)
         self.track_keyboard_var.setChecked(self.settings.track_keyboard)
+        self.track_scroll_var.setChecked(self.settings.track_scroll)
         
         self.track_mouse_var.stateChanged.connect(self.save_settings)
         self.track_keyboard_var.stateChanged.connect(self.save_settings)
+        self.track_scroll_var.stateChanged.connect(self.save_settings)
         
         options_layout.addWidget(self.track_mouse_var)
         options_layout.addWidget(self.track_keyboard_var)
+        options_layout.addWidget(self.track_scroll_var)
         layout.addWidget(options_frame)
         
         # Status Frame
@@ -158,7 +162,7 @@ class MacroRecorder(QMainWindow):
         self.hotkey_listener.start()
         
     def toggle_recording(self):
-        if not self.recording and not (self.track_mouse_var.isChecked() or self.track_keyboard_var.isChecked()):
+        if not self.recording and not (self.track_mouse_var.isChecked() or self.track_keyboard_var.isChecked() or self.track_scroll_var.isChecked()):
             QMessageBox.critical(self, "Error", "At least one tracking option must be enabled!")
             return
             
@@ -173,10 +177,11 @@ class MacroRecorder(QMainWindow):
             self.actions = []
             self.start_time = time.time()
             
-            if self.track_mouse_var.isChecked():
+            if self.track_mouse_var.isChecked() or self.track_scroll_var.isChecked():
                 self.mouse_listener = mouse.Listener(
                     on_move=self.on_move,
-                    on_click=self.on_click
+                    on_click=self.on_click,
+                    on_scroll=self.on_scroll
                 )
                 self.mouse_listener.start()
             
@@ -227,6 +232,18 @@ class MacroRecorder(QMainWindow):
                     'pressed': pressed,
                     'time': current_time
                 })
+
+    def on_scroll(self, x, y, dx, dy):
+        if self.recording and self.track_scroll_var.isChecked():
+            current_time = time.time() - self.start_time
+            self.actions.append({
+                'type': 'scroll',
+                'x': x,
+                'y': y,
+                'dx': dx,
+                'dy': dy,
+                'time': current_time
+            })
     
     def on_key_press(self, key):
         if self.settings_dialog and self.settings_dialog.isVisible():
@@ -397,6 +414,7 @@ class MacroRecorder(QMainWindow):
     def save_settings(self):
         self.settings.track_mouse = self.track_mouse_var.isChecked()
         self.settings.track_keyboard = self.track_keyboard_var.isChecked()
+        self.settings.track_scroll = self.track_scroll_var.isChecked()
         self.settings.record_key = self.record_shortcut
         self.settings.replay_key = self.replay_shortcut
         self.settings.save()
